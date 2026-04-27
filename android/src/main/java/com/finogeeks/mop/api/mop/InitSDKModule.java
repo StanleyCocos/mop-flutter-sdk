@@ -206,13 +206,15 @@ public class InitSDKModule extends BaseApi {
         }
         configBuilder.setEnableJ2V8((Boolean) configMap.get("enableJ2V8"));
         Map<Object, Object> uiConfigMap = (Map<Object, Object>) param.get("uiConfig");
-        String appendingCustomUserAgent = (String) uiConfigMap.get("appendingCustomUserAgent");
-        if (appendingCustomUserAgent != null) {
-            configBuilder.setCustomWebViewUserAgent(appendingCustomUserAgent);
-        }
-        String appletText = (String) uiConfigMap.get("appletText");
-        if (appletText != null) {
-            configBuilder.setAppletText(appletText);
+        if (uiConfigMap != null) {
+            String appendingCustomUserAgent = (String) uiConfigMap.get("appendingCustomUserAgent");
+            if (appendingCustomUserAgent != null) {
+                configBuilder.setCustomWebViewUserAgent(appendingCustomUserAgent);
+            }
+            String appletText = (String) uiConfigMap.get("appletText");
+            if (appletText != null) {
+                configBuilder.setAppletText(appletText);
+            }
         }
 
         Object localeLanguage = configMap.get("localeLanguage");
