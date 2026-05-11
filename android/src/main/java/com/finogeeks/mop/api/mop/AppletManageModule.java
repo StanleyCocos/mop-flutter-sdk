@@ -1,8 +1,14 @@
 package com.finogeeks.mop.api.mop;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
+import com.finogeeks.lib.applet.anim.Anim;
+import com.finogeeks.lib.applet.anim.AnimKt;
 import com.finogeeks.lib.applet.anim.FadeInAnim;
 import com.finogeeks.lib.applet.anim.NoneAnim;
 import com.finogeeks.lib.applet.anim.SlideFromBottomToTopAnim;
@@ -89,7 +95,8 @@ public class AppletManageModule extends BaseApi {
         } else if (event.equals("closeApplet")) {
             if (param.containsKey("appletId") && param.get("appletId") instanceof String) {
                 String appId = (String) param.get("appletId");
-                FinAppClient.INSTANCE.getAppletApiManager().closeApplet(appId);
+                closeApplet(appId, readAnimated(param));
+                //FinAppClient.INSTANCE.getAppletApiManager().closeApplet(appId);
                 callback.onSuccess(null);
             } else {
                 callback.onFail(null);
@@ -176,5 +183,83 @@ public class AppletManageModule extends BaseApi {
         } else if (event.equals("moveCurrentAppletToFront")) {
             AppletUtils.moveCurrentAppletToFront(getContext(), callback);
         }
+    }
+
+    private void closeApplet(String appId, boolean animated) {
+        if (!animated) {
+            bringHostActivityToFront();
+        }
+        runWithAnimationSetting(animated, () ->
+                FinAppClient.INSTANCE.getAppletApiManager().closeApplet(appId));
+    }
+
+    private void finishRunningApplet(String appId, boolean animated) {
+        runWithAnimationSetting(animated, () ->
+                FinAppClient.INSTANCE.getAppletApiManager().finishRunningApplet(appId));
+    }
+
+    private void runWithAnimationSetting(boolean animated, Runnable action) {
+        if (animated) {
+            action.run();
+            return;
+        }
+
+        Anim originalAnim = AnimKt.getActivityTransitionAnim();
+        try {
+            FinAppClient.INSTANCE.getAppletApiManager().setActivityTransitionAnim(NoneAnim.INSTANCE);
+            action.run();
+            HANDLER.postDelayed(() ->
+                    FinAppClient.INSTANCE.getAppletApiManager()
+                            .setActivityTransitionAnim(originalAnim), 350);
+        } catch (RuntimeException error) {
+            FinAppClient.INSTANCE.getAppletApiManager().setActivityTransitionAnim(originalAnim);
+            throw error;
+        }
+    }
+
+    private void bringHostActivityToFront() {
+        if (!(getContext() instanceof Activity)) {
+            return;
+        }
+        Activity activity = (Activity) getContext();
+        try {
+            Intent intent = new Intent(activity, activity.getClass());
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, 0, 0);
+                activity.startActivity(intent, options.toBundle());
+            } else {
+                activity.startActivity(intent);
+            }
+            activity.overridePendingTransition(0, 0);
+        } catch (Exception error) {
+            Log.w(TAG, "bringHostActivityToFront failed", error);
+        }
+    }
+
+    private boolean readAnimated(Map param) {
+        Object animated = param.get("animated");
+        if (animated instanceof Boolean) {
+            return (Boolean) animated;
+        }
+        return true;
+    }
+
+    private Anim resolveActivityTransitionAnim(String anim) {
+        if ("SlideFromLeftToRightAnim".equals(anim)) {
+            return SlideFromLeftToRightAnim.INSTANCE;
+        } else if ("SlideFromRightToLeftAnim".equals(anim)) {
+            return SlideFromRightToLeftAnim.INSTANCE;
+        } else if ("SlideFromTopToBottomAnim".equals(anim)) {
+            return SlideFromTopToBottomAnim.INSTANCE;
+        } else if ("SlideFromBottomToTopAnim".equals(anim)) {
+            return SlideFromBottomToTopAnim.INSTANCE;
+        } else if ("FadeInAnim".equals(anim)) {
+            return FadeInAnim.INSTANCE;
+        } else if ("NoneAnim".equals(anim)) {
+            return NoneAnim.INSTANCE;
+        }
+        return null;
     }
 }
