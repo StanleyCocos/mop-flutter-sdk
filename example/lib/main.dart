@@ -23,13 +23,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 3), () {
-         init();
+      init();
     });
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> init() async {
-
     //多服务器配置
     FinStoreConfig storeConfigA = FinStoreConfig(
       "22LyZEib0gLTQdU3MUauAfJ/xujwNfM6OvvEqQyH4igA",
@@ -41,25 +40,24 @@ class _MyAppState extends State<MyApp> {
     FinStoreConfig storeConfigB = FinStoreConfig(
       "22LyZEib0gLTQdU3MUauAfJ/xujwNfM6OvvEqQyH4igA",
       "703b9026be3d6bc5",
-      "https://finchat-mop-b.finogeeks.club"
+      "https://finchat-mop-b.finogeeks.club",
     );
     List<FinStoreConfig> storeConfigs = [storeConfigA];
     Config config = Config(storeConfigs);
     config.language = LanguageType.English;
-    config.baseLoadingViewClass = "LoadingView";
     config.userId = "18607180143";
     config.channel = "finclip";
     config.phone = "1234567890";
     config.appletDebugMode = BOOLState.BOOLStateTrue;
     config.debug = true;
-    config.logLevel =  LogLevel.LEVEL_VERBOSE;
+    config.logLevel = LogLevel.LEVEL_VERBOSE;
     // 根据 AppId配置对应的灰度扩展参数
     // 优先按照 AppId 精准匹配，如果是 null或者没有配置 会取 Other
     // 特殊{}空对象，表示不要任何扩展参数
     config.grayAppletVersionConfigs = {
       "5f72e3559a6a7900019b5baa": {"a": "11", "b": "22"}, //官方小程序 2
       "5facb3a52dcbff00017469bd": {"a": "1", "b": "2"}, // 画图小程序 1
-      "Other": {"a": "100", "b": "200"}
+      "Other": {"a": "100", "b": "200"},
     };
 
     UIConfig uiconfig = UIConfig();
@@ -75,7 +73,7 @@ class _MyAppState extends State<MyApp> {
     // capsuleConfig.capsuleRightMargin = 25;
     uiconfig.capsuleConfig = capsuleConfig;
     uiconfig.appletText = "applet";
-    uiconfig.loadingLayoutCls = "com.finogeeks.mop_example.CustomLoadingPage";
+    uiconfig.hideLoadingPageTechSupport = true;
     uiconfig.autoAdaptDarkMode = true;
 
     // if (Platform.isIOS) {
@@ -105,37 +103,40 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<Map<String, dynamic>> pushNativePage(dynamic params) async {
-  print(params);
-  Map<String, dynamic> result = {
-    "userInfo":{
-      "nickName" : "haley",
-      "avatarUrl" : "https://www.finclip.com",
-      "gender" : 1,
-      "country" : "China",
-      "province" : "Guangdong",
-      "city" : "shenzhen",
-    }
-  };
-  return Future.value(result);
-}
+    print(params);
+    Map<String, dynamic> result = {
+      "userInfo": {
+        "nickName": "haley",
+        "avatarUrl": "https://www.finclip.com",
+        "gender": 1,
+        "country": "China",
+        "province": "Guangdong",
+        "city": "shenzhen",
+      },
+    };
+    return Future.value(result);
+  }
 
   Future<Map<String, dynamic>> getUserProfile(dynamic params) async {
-  Map<String, dynamic> result = {
-    "userInfo":{
-      "nickName" : "haley",
-      "avatarUrl" : "https://www.finclip.com",
-      "gender" : 1,
-      "country" : "China",
-      "province" : "Guangdong",
-      "city" : "shenzhen",
-    }
-  };
+    Map<String, dynamic> result = {
+      "userInfo": {
+        "nickName": "haley",
+        "avatarUrl": "https://www.finclip.com",
+        "gender": 1,
+        "country": "China",
+        "province": "Guangdong",
+        "city": "shenzhen",
+      },
+    };
 
-  return Future.value(result);
-}
+    return Future.value(result);
+  }
 
   Widget _buildAppletItem(
-      String appletId, String itemName, VoidCallback tapAction) {
+    String appletId,
+    String itemName,
+    VoidCallback tapAction,
+  ) {
     return GestureDetector(
       onTap: tapAction,
       child: Container(
@@ -150,16 +151,18 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         child: Center(
-          child: Text(
-            itemName,
-            style: TextStyle(color: Colors.white),
-          ),
+          child: Text(itemName, style: TextStyle(color: Colors.white)),
         ),
       ),
     );
   }
 
-  Widget _buildAppletWidget(String appletId, String appletName, int index, Map<String, String>? startParams) {
+  Widget _buildAppletWidget(
+    String appletId,
+    String appletName,
+    int index,
+    Map<String, String>? startParams,
+  ) {
     return Container(
       margin: EdgeInsets.only(left: 20, top: 30, right: 20),
       child: Column(
@@ -167,11 +170,12 @@ class _MyAppState extends State<MyApp> {
           Text(
             appletName,
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w500, color: Colors.red),
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.red,
+            ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           Container(
             height: 100,
             child: GridView.count(
@@ -192,17 +196,17 @@ class _MyAppState extends State<MyApp> {
                   } else if (index == 3) {
                     mode = FCReLaunchMode.NEVER;
                   }
-                  
+
                   RemoteAppletRequest request = RemoteAppletRequest(
-                    apiServer: 'https://api.finclip.com', 
-                    appletId: appletId, 
+                    apiServer: 'https://api.finclip.com',
+                    appletId: appletId,
                     transitionStyle: style,
                     reLaunchMode: mode,
-                    startParams: startParams);
+                    startParams: startParams,
+                  );
                   Mop.instance.startApplet(request);
 
                   // Mop.instance.qrcodeOpenApplet('https://api.finclip.com/api/v1/mop/runtime/applet/-f-MGYzN2Q1YTYzMmI2MWIyZg--');
-
                 }),
                 _buildAppletItem(appletId, "finish", () {
                   Mop.instance.finishRunningApplet(appletId, true);
@@ -215,7 +219,7 @@ class _MyAppState extends State<MyApp> {
                 }),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -251,7 +255,9 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NewFeaturesPage()),
+                      MaterialPageRoute(
+                        builder: (context) => NewFeaturesPage(),
+                      ),
                     );
                   },
                 );
@@ -261,11 +267,16 @@ class _MyAppState extends State<MyApp> {
         ),
         body: ListView(
           children: <Widget>[
-            _buildAppletWidget("5facb3a52dcbff00017469bd", "画图小程序", 0, {'query':'ramdom='+context.hashCode.toString()}),
-            _buildAppletWidget("5f72e3559a6a7900019b5baa", "官方小程序", 1, {'query':'key=value'}),
+            _buildAppletWidget("5facb3a52dcbff00017469bd", "画图小程序", 0, {
+              'query': 'ramdom=' + context.hashCode.toString(),
+            }),
+            _buildAppletWidget("5f72e3559a6a7900019b5baa", "官方小程序", 1, {
+              'query': 'key=value',
+            }),
             _buildAppletWidget("5f17f457297b540001e06ebb", "api测试小程序", 2, null),
-            _buildAppletWidget("61386f6484dd160001d3e1ab", "测试小程序", 3, {'query':'ramdom='+context.hashCode.toString()}),
-            
+            _buildAppletWidget("61386f6484dd160001d3e1ab", "测试小程序", 3, {
+              'query': 'ramdom=' + context.hashCode.toString(),
+            }),
           ],
         ),
       ),
@@ -293,16 +304,32 @@ class MyAppletHandler extends AppletHandler {
 
   @override
   Future<List<CustomMenu>> getCustomMenus(String appId) {
-    CustomMenu menu1 = CustomMenu('menu100', 'https://img1.baidu.com/it/u=2878938773,1765835171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', '百度图标', 'common');
-    menu1.darkImage = 'https://img95.699pic.com/xsj/14/46/mh.jpg%21/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast';
-    
-    CustomMenu menu2 = CustomMenu('menu101', 'minipro_list_collect', '工程图标', 'common');
+    CustomMenu menu1 = CustomMenu(
+      'menu100',
+      'https://img1.baidu.com/it/u=2878938773,1765835171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      '百度图标',
+      'common',
+    );
+    menu1.darkImage =
+        'https://img95.699pic.com/xsj/14/46/mh.jpg%21/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast';
+
+    CustomMenu menu2 = CustomMenu(
+      'menu101',
+      'minipro_list_collect',
+      '工程图标',
+      'common',
+    );
     menu2.darkImage = 'minipro_list_service';
 
     List<CustomMenu> customMenus = [
       menu1,
       menu2,
-      CustomMenu('ShareDingDing', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpvugSNLs9R7iopz_noeotAelvgzYj-74iCg&usqp=CAU', '谷歌图标', 'common'),
+      CustomMenu(
+        'ShareDingDing',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpvugSNLs9R7iopz_noeotAelvgzYj-74iCg&usqp=CAU',
+        '谷歌图标',
+        'common',
+      ),
       // CustomMenu('WXShareAPPFriends', 'https://img1.baidu.com/it/u=2878938773,1765835171&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', '微信好朋友', 'common'),
       // CustomMenu('WXShareAPPMoments', 'https://img2.baidu.com/it/u=3113705544,436318069&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', '微信朋友圈', 'common'),
 
@@ -315,7 +342,7 @@ class MyAppletHandler extends AppletHandler {
   @override
   Future<void> getMobileNumber(Function(dynamic params) callback) {
     // TODO: implement getMobileNumber
-    Map<String, dynamic> result = {"phone": '18607180143',"other":'abc123'};
+    Map<String, dynamic> result = {"phone": '18607180143', "other": 'abc123'};
     print('getMobileNumber:' + result.toString());
     callback(result);
     return Future.value(null);
@@ -325,17 +352,17 @@ class MyAppletHandler extends AppletHandler {
   Future<Map<String, dynamic>> getUserInfo() {
     // TODO: implement getUserInfo
     Map<String, dynamic> result = {
-    "userInfo":{
-      "nickName" : "haley",
-      "avatarUrl" : "https://www.finclip.com",
-      "gender" : 1,
-      "country" : "China",
-      "province" : "Guangdong",
-      "city" : "shenzhen",
-    }
-  };
+      "userInfo": {
+        "nickName": "haley",
+        "avatarUrl": "https://www.finclip.com",
+        "gender": 1,
+        "country": "China",
+        "province": "Guangdong",
+        "city": "shenzhen",
+      },
+    };
 
-  return Future.value(result);
+    return Future.value(result);
   }
 
   // @override
@@ -345,10 +372,14 @@ class MyAppletHandler extends AppletHandler {
   // }
 
   @override
-  Future<void> onCustomMenuClick(String appId, String path, String menuId, String appInfo) {
+  Future<void> onCustomMenuClick(
+    String appId,
+    String path,
+    String menuId,
+    String appInfo,
+  ) {
     print('自定义菜单的点击 appId:$appId path: $path menuId:$menuId');
     // TODO: implement onCustomMenuClick
     throw UnimplementedError();
   }
-
 }

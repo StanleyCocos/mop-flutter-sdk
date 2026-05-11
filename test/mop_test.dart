@@ -20,4 +20,17 @@ void main() {
   test('getPlatformVersion', () async {
     expect(await Mop.instance.platformVersion, '42');
   });
+
+  test('UIConfig 默认不隐藏加载页技术支持标识', () {
+    final UIConfig config = UIConfig();
+
+    expect(config.toMap()['hideLoadingPageTechSupport'], false);
+  });
+
+  test('UIConfig 可开启隐藏加载页技术支持标识', () {
+    final UIConfig config = UIConfig();
+    config.hideLoadingPageTechSupport = true;
+
+    expect(config.toMap()['hideLoadingPageTechSupport'], true);
+  });
 }

@@ -239,8 +239,26 @@ config.userId = '您app的用户唯一标识';
 UIConfig uiConfig = UIConfig();
 uiConfig.isHideAddToDesktopMenu = true;
 uiConfig.isHideFeedbackAndComplaints = true;
+uiConfig.hideLoadingPageTechSupport = true;
 final res = await Mop.instance.initSDK(config, uiConfig: uiConfig);
 ```
+
+### 1.1 隐藏加载页技术支持标识
+
+如果只需要隐藏加载页底部的技术支持标识，无需再在 Android / iOS 工程里分别实现自定义加载页，直接打开 Flutter 统一开关即可：
+
+```dart
+final UIConfig uiConfig = UIConfig()
+  ..hideLoadingPageTechSupport = true;
+
+await Mop.instance.initSDK(config, uiConfig: uiConfig);
+```
+
+说明：
+
+- Android 会在未显式传入 `loadingLayoutCls` 时自动使用插件内置的加载页实现。
+- iOS 会在未显式传入 `baseLoadingViewClass` 时自动使用插件内置的加载页实现。
+- 如果你已经配置了 `loadingLayoutCls` 或 `baseLoadingViewClass`，插件会继续优先使用你的自定义实现。
 
 ### 2. 打开小程序
 

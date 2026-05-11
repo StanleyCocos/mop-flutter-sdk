@@ -1,5 +1,6 @@
 package com.finogeeks.mop.api.mop.util;
 
+import com.finogeeks.mop.MopHideTechSupportLoadingPage;
 import com.finogeeks.lib.applet.client.FinAppConfig;
 import com.finogeeks.lib.applet.client.FinAppConfigPriority;
 
@@ -160,6 +161,8 @@ public class InitUtils {
             String loadingLayoutCls = (String) map.get("loadingLayoutCls");
             if (loadingLayoutCls != null) {
                 uiConfig.setLoadingLayoutCls(loadingLayoutCls);
+            } else if (Boolean.TRUE.equals(map.get("hideLoadingPageTechSupport"))) {
+                uiConfig.setLoadingLayoutCls(MopHideTechSupportLoadingPage.class.getName());
             }
             return uiConfig;
         }

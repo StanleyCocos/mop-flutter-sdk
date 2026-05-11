@@ -9,6 +9,7 @@
 #import <FinApplet/FinApplet.h>
 #import <FinAppletExt/FinAppletExt.h>
 #import "MOPTools.h"
+#import "MOPHideTechSupportLoadingView.h"
 
 @implementation MOP_initialize
 
@@ -77,6 +78,9 @@
     NSError* error = nil;
     FATUIConfig *uiconfig = [[FATUIConfig alloc]init];
     if (_uiConfig) {
+        if (!config.baseLoadingViewClass && [_uiConfig[@"hideLoadingPageTechSupport"] boolValue]) {
+            config.baseLoadingViewClass = NSStringFromClass([MOPHideTechSupportLoadingView class]);
+        }
         if (_uiConfig[@"navigationTitleTextAttributes"]) {
             uiconfig.navigationTitleTextAttributes = _uiConfig[@"navigationTitleTextAttributes"];
         }

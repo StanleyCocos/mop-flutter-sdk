@@ -8,6 +8,7 @@
 #import "Mop_initSDK.h"
 #import "MOPTools.h"
 #import "MopPlugin.h"
+#import "MOPHideTechSupportLoadingView.h"
 
 @implementation MOP_initSDK
 
@@ -78,6 +79,9 @@
         config.language = FATPreferredLanguageSimplifiedChinese;
     }
     config.customLanguagePath = self.config[@"customLanguagePath"];
+    if (!config.baseLoadingViewClass && [_uiConfig[@"hideLoadingPageTechSupport"] boolValue]) {
+        config.baseLoadingViewClass = NSStringFromClass([MOPHideTechSupportLoadingView class]);
+    }
         
     NSError* error = nil;
     FATUIConfig *uiconfig = [[FATUIConfig alloc]init];

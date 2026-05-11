@@ -10,8 +10,8 @@ export 'platform_view.dart' show MopPlatformView, PlatformViewEventDelegate;
 typedef MopEventCallback = void Function(dynamic event);
 typedef MopEventErrorCallback = void Function(dynamic event);
 
-typedef ExtensionApiHandler = Future<Map<String, dynamic>> Function(
-    dynamic params);
+typedef ExtensionApiHandler =
+    Future<Map<String, dynamic>> Function(dynamic params);
 typedef MopAppletHandler = Future Function(dynamic params);
 
 class FinStoreConfig {
@@ -39,12 +39,16 @@ class FinStoreConfig {
   /// 是否开启预加载基础库
   bool enablePreloadFramework = true;
 
-  FinStoreConfig(this.sdkKey, this.sdkSecret, this.apiServer,
-      {this.apmServer,
-      this.cryptType = "MD5",
-      this.fingerprint,
-      this.encryptServerData = false,
-      this.enablePreloadFramework = true});
+  FinStoreConfig(
+    this.sdkKey,
+    this.sdkSecret,
+    this.apiServer, {
+    this.apmServer,
+    this.cryptType = "MD5",
+    this.fingerprint,
+    this.encryptServerData = false,
+    this.enablePreloadFramework = true,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -55,7 +59,7 @@ class FinStoreConfig {
       "cryptType": cryptType,
       "fingerprint": fingerprint,
       "encryptServerData": encryptServerData,
-      "enablePreloadFramework": enablePreloadFramework
+      "enablePreloadFramework": enablePreloadFramework,
     };
   }
 }
@@ -249,8 +253,9 @@ class Config {
   Config(this.finStoreConfigs);
 
   Map<String, dynamic> toMap() {
-    List<Map<String, dynamic>>? storeConfigs =
-        finStoreConfigs.map((e) => e.toMap()).toList();
+    List<Map<String, dynamic>>? storeConfigs = finStoreConfigs
+        .map((e) => e.toMap())
+        .toList();
     return {
       "finStoreConfigs": storeConfigs,
       "userId": userId,
@@ -411,16 +416,21 @@ class UIConfig {
   /// Loading页回调Class
   String? loadingLayoutCls;
 
+  /// 是否隐藏加载页底部的技术支持标识，默认关闭。
+  bool hideLoadingPageTechSupport = false;
+
   Map<String, dynamic> toMap() {
     return {
       "navigationTitleTextAttributes": navigationTitleTextAttributes,
       "navigationBarHeight": navigationBarHeight,
       "navigationBarTitleLightColor": navigationBarTitleLightColor.toSigned(32),
       "navigationBarTitleDarkColor": navigationBarTitleDarkColor.toSigned(32),
-      "navigationBarBackBtnLightColor":
-          navigationBarBackBtnLightColor.toSigned(32),
-      "navigationBarBackBtnDarkColor":
-          navigationBarBackBtnDarkColor.toSigned(32),
+      "navigationBarBackBtnLightColor": navigationBarBackBtnLightColor.toSigned(
+        32,
+      ),
+      "navigationBarBackBtnDarkColor": navigationBarBackBtnDarkColor.toSigned(
+        32,
+      ),
       "isAlwaysShowBackInDefaultNavigationBar":
           isAlwaysShowBackInDefaultNavigationBar,
       "isClearNavigationBarNavButtonBackground":
@@ -450,6 +460,7 @@ class UIConfig {
       "disableSlideCloseAppletGesture": disableSlideCloseAppletGesture,
       "appletText": appletText,
       "loadingLayoutCls": loadingLayoutCls,
+      "hideLoadingPageTechSupport": hideLoadingPageTechSupport,
     };
   }
 }
@@ -563,7 +574,7 @@ class FloatWindowConfig {
       "x": x,
       "y": y,
       "width": width,
-      "height": height
+      "height": height,
     };
   }
 }
@@ -600,8 +611,14 @@ class NavHomeConfig {
   /// （暗黑模式）
   int bgDarkColor = 0x80ffffff;
 
-  NavHomeConfig(this.width, this.height, this.borderLightColor,
-      this.borderDarkColor, this.bgLightColor, this.bgDarkColor);
+  NavHomeConfig(
+    this.width,
+    this.height,
+    this.borderLightColor,
+    this.borderDarkColor,
+    this.bgLightColor,
+    this.bgDarkColor,
+  );
 
   Map<String, dynamic> toMap() {
     return {
@@ -722,18 +739,22 @@ class AuthViewConfig {
       "authorizeTitleLightColor": authorizeTitleLightColor.toSigned(32),
       "authorizeTitleDarkColor": authorizeTitleDarkColor.toSigned(32),
       "authorizeDescriptionTextSize": authorizeDescriptionTextSize,
-      "authorizeDescriptionLightColor":
-          authorizeDescriptionLightColor.toSigned(32),
-      "authorizeDescriptionDarkColor":
-          authorizeDescriptionDarkColor.toSigned(32),
+      "authorizeDescriptionLightColor": authorizeDescriptionLightColor.toSigned(
+        32,
+      ),
+      "authorizeDescriptionDarkColor": authorizeDescriptionDarkColor.toSigned(
+        32,
+      ),
       "agreementTitleTextSize": agreementTitleTextSize,
       "agreementTitleLightColor": agreementTitleLightColor.toSigned(32),
       "agreementTitleDarkColor": agreementTitleDarkColor.toSigned(32),
       "agreementDescriptionTextSize": agreementDescriptionTextSize,
-      "agreementDescriptionLightColor":
-          agreementDescriptionLightColor.toSigned(32),
-      "agreementDescriptionDarkColor":
-          agreementDescriptionDarkColor.toSigned(32),
+      "agreementDescriptionLightColor": agreementDescriptionLightColor.toSigned(
+        32,
+      ),
+      "agreementDescriptionDarkColor": agreementDescriptionDarkColor.toSigned(
+        32,
+      ),
       "linkLightColor": linkLightColor.toSigned(32),
       "linkDarkColor": linkDarkColor.toSigned(32),
       "allowButtonLightConfig": allowButtonLightConfig?.toMap(),
@@ -767,13 +788,14 @@ class AuthButtonConfig {
   int pressedBorderColor;
 
   AuthButtonConfig(
-      this.cornerRadius,
-      this.normalBackgroundColor,
-      this.pressedBackgroundColor,
-      this.normalTextColor,
-      this.pressedTextColor,
-      this.normalBorderColor,
-      this.pressedBorderColor);
+    this.cornerRadius,
+    this.normalBackgroundColor,
+    this.pressedBackgroundColor,
+    this.normalTextColor,
+    this.pressedTextColor,
+    this.normalBorderColor,
+    this.pressedBorderColor,
+  );
 
   Map<String, dynamic> toMap() {
     return {
@@ -783,7 +805,7 @@ class AuthButtonConfig {
       "normalTextColor": normalTextColor.toSigned(32),
       "pressedTextColor": pressedTextColor.toSigned(32),
       "normalBorderColor": normalBorderColor.toSigned(32),
-      "pressedBorderColor": pressedBorderColor.toSigned(32)
+      "pressedBorderColor": pressedBorderColor.toSigned(32),
     };
   }
 }
@@ -914,8 +936,12 @@ class QRCodeAppletRequest {
   // 触发reLaunch的条件模式
   FCReLaunchMode reLaunchMode;
 
-  QRCodeAppletRequest(this.qrCode,
-      {this.isSingleProcess = false, this.isSingTask = false, this.reLaunchMode = FCReLaunchMode.PARAMS_EXIST});
+  QRCodeAppletRequest(
+    this.qrCode, {
+    this.isSingleProcess = false,
+    this.isSingTask = false,
+    this.reLaunchMode = FCReLaunchMode.PARAMS_EXIST,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -934,7 +960,7 @@ enum Anim {
   SlideFromTopToBottomAnim,
   SlideFromBottomToTopAnim,
   FadeInAnim,
-  NoneAnim
+  NoneAnim,
 }
 
 enum ConfigPriority {
@@ -966,14 +992,14 @@ enum LogLevel {
   LEVEL_INFO, // 设置为该等级，将会记录ERROR、WARNING和INFO级别的日志
   LEVEL_DEBUG, // 设置为该等级，将会记录ERROR、WARING、INFO和DEBUG级别的日志
   LEVEL_VERBOSE, // 设置为该等级，将会记录ERROR、WARING、INFO、DEBUG和VERBOSE级别的日志
-  LEVEL_NONE
+  LEVEL_NONE,
 }
 
 enum FCReLaunchMode {
-  PARAMS_EXIST,   // 只要有启动参数（path、query），热启动就会执行reLaunch
+  PARAMS_EXIST, // 只要有启动参数（path、query），热启动就会执行reLaunch
   ONLY_PARAMS_DIFF, // 只有启动参数与上一次不同，热启动时才会执行reLaunch
-  ALWAYS,  // 每次热启动均执行reLaunch
-  NEVER     // 永远不执行reLaunch，每次热启动均复用页面栈
+  ALWAYS, // 每次热启动均执行reLaunch
+  NEVER, // 永远不执行reLaunch，每次热启动均复用页面栈
 }
 
 class Mop {
@@ -998,18 +1024,22 @@ class Mop {
     // init
     _channel = const MethodChannel('mop');
     _channel.setMethodCallHandler(_handlePlatformMethodCall);
-    _mopEventChannel =
-        const EventChannel('plugins.mop.finogeeks.com/mop_event');
-    _mopEventChannel.receiveBroadcastStream().listen((dynamic value) {
-      debugPrint('matrix: receiveBroadcastStream $value');
-      for (Map m in _mopEventQueye) {
-        if (m['event'] == value['event']) {
-          m['MopEventCallback'](value['body']);
+    _mopEventChannel = const EventChannel(
+      'plugins.mop.finogeeks.com/mop_event',
+    );
+    _mopEventChannel.receiveBroadcastStream().listen(
+      (dynamic value) {
+        debugPrint('matrix: receiveBroadcastStream $value');
+        for (Map m in _mopEventQueye) {
+          if (m['event'] == value['event']) {
+            m['MopEventCallback'](value['body']);
+          }
         }
-      }
-    }, onError: (dynamic value) {
-      // failure(value);
-    });
+      },
+      onError: (dynamic value) {
+        // failure(value);
+      },
+    );
   }
 
   static Mop get instance => _instance;
@@ -1058,23 +1088,27 @@ class Mop {
   /// [customWebViewUserAgent] 设置自定义webview ua
   /// [appletIntervalUpdateLimit] 设置小程序批量更新周期
   /// [maxRunningApplet] 设置最大同时运行小程序个数
-  Future<Map> initialize(String sdkkey, String secret,
-      {String? apiServer,
-      String? apiPrefix,
-      String? cryptType,
-      bool encryptServerData = false,
-      bool disablePermission = false,
-      String? userId,
-      bool debug = false,
-      bool bindAppletWithMainProcess = false,
-      int? pageCountLimit = 0,
-      List<FinStoreConfig>? finStoreConfigs,
-      UIConfig? uiConfig,
-      String? customWebViewUserAgent,
-      int? appletIntervalUpdateLimit,
-      int? maxRunningApplet}) async {
-    List<Map<String, dynamic>>? storeConfigs =
-        finStoreConfigs?.map((e) => e.toMap()).toList();
+  Future<Map> initialize(
+    String sdkkey,
+    String secret, {
+    String? apiServer,
+    String? apiPrefix,
+    String? cryptType,
+    bool encryptServerData = false,
+    bool disablePermission = false,
+    String? userId,
+    bool debug = false,
+    bool bindAppletWithMainProcess = false,
+    int? pageCountLimit = 0,
+    List<FinStoreConfig>? finStoreConfigs,
+    UIConfig? uiConfig,
+    String? customWebViewUserAgent,
+    int? appletIntervalUpdateLimit,
+    int? maxRunningApplet,
+  }) async {
+    List<Map<String, dynamic>>? storeConfigs = finStoreConfigs
+        ?.map((e) => e.toMap())
+        .toList();
 
     final Map ret = await _channel.invokeMethod('initialize', {
       'appkey': sdkkey,
@@ -1149,8 +1183,11 @@ class Mop {
 
   /// 通过二维码打开小程序
   /// [qrcode] 二维码内容
-  Future qrcodeOpenApplet(String qrcode,
-      {bool isSingleProcess = false, bool isSingTask = false}) async {
+  Future qrcodeOpenApplet(
+    String qrcode, {
+    bool isSingleProcess = false,
+    bool isSingTask = false,
+  }) async {
     Map<String, Object> params = {
       'qrcode': qrcode,
       'isSingleProcess': isSingleProcess,
@@ -1166,8 +1203,11 @@ class Mop {
   }
 
   /// （扫码后）解密-鉴权-打开小程序
-  Future scanOpenApplet(String info,
-      {bool isSingleProcess = false, bool isSingTask = false}) async {
+  Future scanOpenApplet(
+    String info, {
+    bool isSingleProcess = false,
+    bool isSingTask = false,
+  }) async {
     Map<String, Object> params = {
       'info': info,
       'isSingleProcess': isSingleProcess,
@@ -1178,8 +1218,10 @@ class Mop {
 
   /// 关闭小程序 小程序会在内存中存在
   Future<void> closeApplet(String appletId, bool animated) async {
-    await _channel.invokeMethod(
-        "closeApplet", {"appletId": appletId, "animated": animated});
+    await _channel.invokeMethod("closeApplet", {
+      "appletId": appletId,
+      "animated": animated,
+    });
     return;
   }
 
@@ -1191,8 +1233,10 @@ class Mop {
 
   /// 结束小程序 小程序会从内存中清除
   Future<void> finishRunningApplet(String appletId, bool animated) async {
-    await _channel.invokeMethod(
-        "finishRunningApplet", {"appletId": appletId, "animated": animated});
+    await _channel.invokeMethod("finishRunningApplet", {
+      "appletId": appletId,
+      "animated": animated,
+    });
     return;
   }
 
@@ -1224,9 +1268,13 @@ class Mop {
 
   /// 根据微信QrCode信息解析小程序信息
   Future<Map<String, dynamic>> parseAppletInfoFromWXQrCode(
-      String qrCode, String apiServer) async {
-    final ret = await _channel.invokeMapMethod("parseAppletInfoFromWXQrCode",
-        {"qrCode": qrCode, "apiServer": apiServer});
+    String qrCode,
+    String apiServer,
+  ) async {
+    final ret = await _channel.invokeMapMethod("parseAppletInfoFromWXQrCode", {
+      "qrCode": qrCode,
+      "apiServer": apiServer,
+    });
     return Map<String, dynamic>.from(ret!);
   }
 
@@ -1271,8 +1319,9 @@ class Mop {
       return handler.appletDidOpen(params["appId"]);
     };
     _appletHandlerApis["getPhoneNumber"] = (params) async {
-      return handler.getMobileNumber((params0) =>
-          {_channel.invokeMethod("getPhoneNumberResult", params0)});
+      return handler.getMobileNumber(
+        (params0) => {_channel.invokeMethod("getPhoneNumberResult", params0)},
+      );
     };
     _channel.invokeMethod("registerAppletHandler");
   }
@@ -1296,13 +1345,17 @@ class Mop {
   /// [eventName] 方法名
   /// [nativeViewId] webviewId
   /// [eventData] 参数
-  Future<void> callJS(String appId, String eventName, String nativeViewId,
-      Map<String, dynamic> eventData) async {
+  Future<void> callJS(
+    String appId,
+    String eventName,
+    String nativeViewId,
+    Map<String, dynamic> eventData,
+  ) async {
     await _channel.invokeMethod("callJS", {
       "appId": appId,
       "eventName": eventName,
       "nativeViewId": nativeViewId,
-      "eventData": eventData
+      "eventData": eventData,
     });
     return;
   }
@@ -1311,9 +1364,13 @@ class Mop {
   /// [appId] 小程序id
   /// [eventData] 事件对象
   Future<void> sendCustomEvent(
-      String appId, Map<String, dynamic> eventData) async {
-    await _channel.invokeMethod(
-        "sendCustomEvent", {"appId": appId, "eventData": eventData});
+    String appId,
+    Map<String, dynamic> eventData,
+  ) async {
+    await _channel.invokeMethod("sendCustomEvent", {
+      "appId": appId,
+      "eventData": eventData,
+    });
     return;
   }
 
@@ -1332,8 +1389,9 @@ class Mop {
 
   /// 获取国密加密
   Future<String> getSMSign(String plainText) async {
-    var result =
-        await _channel.invokeMapMethod("smsign", {'plainText': plainText});
+    var result = await _channel.invokeMapMethod("smsign", {
+      'plainText': plainText,
+    });
     var data = result?['data']['data'];
     debugPrint(data);
     return data;
@@ -1380,9 +1438,9 @@ class Mop {
   /// ```
   Future<Map<String, dynamic>> downloadApplets(
     List<String> appIds,
-    String apiServer,
-    {bool isBatchDownload = true}
-  ) async {
+    String apiServer, {
+    bool isBatchDownload = true,
+  }) async {
     Map<String, Object> params = {
       'appIds': appIds,
       'apiServer': apiServer,
@@ -1414,12 +1472,9 @@ class Mop {
   /// ```
   Future<Map<String, dynamic>> searchApplets(
     String text,
-    String apiServer
+    String apiServer,
   ) async {
-    Map<String, Object> params = {
-      'text': text,
-      'apiServer': apiServer,
-    };
+    Map<String, Object> params = {'text': text, 'apiServer': apiServer};
     final Map ret = await _channel.invokeMethod('searchApplets', params);
     return Map<String, dynamic>.from(ret);
   }
@@ -1460,9 +1515,10 @@ class Mop {
   /// }
   /// ```
   Future<Map<String, dynamic>> getFinFileAbsolutePath(
-    String finFilePath,
-    {String? appId, bool needFileExist = true}
-  ) async {
+    String finFilePath, {
+    String? appId,
+    bool needFileExist = true,
+  }) async {
     Map<String, Object> params = {
       'finFilePath': finFilePath,
       'needFileExist': needFileExist,
@@ -1470,7 +1526,10 @@ class Mop {
     if (appId != null) {
       params['appId'] = appId;
     }
-    final Map ret = await _channel.invokeMethod('getFinFileAbsolutePath', params);
+    final Map ret = await _channel.invokeMethod(
+      'getFinFileAbsolutePath',
+      params,
+    );
     return Map<String, dynamic>.from(ret);
   }
 
@@ -1492,7 +1551,7 @@ class Mop {
   /// ```
   Future<Map<String, dynamic>> generateFinFilePath(
     String fileName,
-    FinFilePathType pathType
+    FinFilePathType pathType,
   ) async {
     Map<String, Object> params = {
       'fileName': fileName,
@@ -1534,9 +1593,10 @@ class Mop {
   /// }
   /// ```
   Future<Map<String, dynamic>> getFavoriteApplets(
-    String apiServer,
-    {int pageNo = 0, int pageSize = 0}
-  ) async {
+    String apiServer, {
+    int pageNo = 0,
+    int pageSize = 0,
+  }) async {
     Map<String, Object> params = {
       'apiServer': apiServer,
       'pageNo': pageNo,
