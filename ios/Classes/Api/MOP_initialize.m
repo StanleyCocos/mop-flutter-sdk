@@ -57,12 +57,9 @@
             config.cryptType = FATApiCryptTypeMD5;
         }
         
-        // encryptServerData
-        NSLog(@"encryptServerData:%d",self.encryptServerData);
         config.encryptServerData = self.encryptServerData;
     }
     
-    NSLog(@"disablePermission:%d",self.disablePermission);
     config.disableAuthorize = self.disablePermission;
     config.currentUserId = [self.userId copy];
     config.appletIntervalUpdateLimit = self.appletIntervalUpdateLimit;

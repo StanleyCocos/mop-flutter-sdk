@@ -3,7 +3,6 @@ package com.finogeeks.mop.api.mop;
 import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.finogeeks.lib.applet.client.FinAppClient;
 import com.finogeeks.lib.applet.client.FinAppConfig;
@@ -13,16 +12,12 @@ import com.finogeeks.mop.api.BaseApi;
 import com.finogeeks.mop.api.mop.util.InitUtils;
 import com.finogeeks.mop.interfaces.ICallback;
 import com.finogeeks.mop.service.MopPluginService;
-import com.finogeeks.xlog.XLogLevel;
-import com.google.gson.Gson;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class BaseModule extends BaseApi {
-    private final static String TAG = "BaseModule";
 
     public BaseModule(Context context) {
         super(context);
@@ -87,7 +82,6 @@ public class BaseModule extends BaseApi {
         String customWebViewUserAgent = (String) param.get("customWebViewUserAgent");
         Integer appletIntervalUpdateLimit = (Integer) param.get("appletIntervalUpdateLimit");
         Integer maxRunningApplet = (Integer) param.get("maxRunningApplet");
-        Gson gson = new Gson();
         List<FinStoreConfig> finStoreConfigs = null;
         if (param.get("finStoreConfigs") != null) {
             finStoreConfigs = new ArrayList<>();
@@ -140,7 +134,6 @@ public class BaseModule extends BaseApi {
         if (uiConfig != null) builder.setUiConfig(uiConfig);
 
         FinAppConfig config = builder.build();
-        Log.d(TAG, "config:" + gson.toJson(config));
 
         final Application application = MopPluginService.getInstance().getActivity().getApplication();
         // SDK初始化结果回调，用于接收SDK初始化状态

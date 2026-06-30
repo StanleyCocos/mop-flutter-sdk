@@ -91,8 +91,7 @@ class _MyAppState extends State<MyApp> {
     //   print(res);
     // }
 
-    final res = await Mop.instance.initSDK(config, uiConfig: uiconfig);
-    print(res);
+    await Mop.instance.initSDK(config, uiConfig: uiconfig);
     Mop.instance.registerAppletHandler(MyAppletHandler());
 
     Mop.instance.registerExtensionApi('getUserProfile', getUserProfile);

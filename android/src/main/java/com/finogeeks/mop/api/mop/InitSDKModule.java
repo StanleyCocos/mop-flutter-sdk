@@ -3,7 +3,6 @@ package com.finogeeks.mop.api.mop;
 import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.finogeeks.lib.applet.client.FinAppClient;
 import com.finogeeks.lib.applet.client.FinAppConfig;
@@ -14,9 +13,7 @@ import com.finogeeks.mop.api.BaseApi;
 import com.finogeeks.mop.api.mop.util.InitUtils;
 import com.finogeeks.mop.interfaces.ICallback;
 import com.finogeeks.mop.service.MopPluginService;
-import com.finogeeks.mop.impls.MyUserProfileHandler;
 import com.finogeeks.xlog.XLogLevel;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +21,6 @@ import java.util.Map;
 import java.util.Locale;
 
 public class InitSDKModule extends BaseApi {
-
-    private final static String TAG = "InitSDKModule";
 
     public InitSDKModule(Context context) {
         super(context);
@@ -44,7 +39,6 @@ public class InitSDKModule extends BaseApi {
             return;
         }
 
-        Log.d(TAG, "param:" + param);
         FinAppConfig.Builder configBuilder = new FinAppConfig.Builder();
 
         // config
@@ -242,7 +236,6 @@ public class InitSDKModule extends BaseApi {
         }
 
         FinAppConfig finAppConfig = configBuilder.build();
-        Log.d(TAG, "finAppConfig:" + new Gson().toJson(finAppConfig));
 
         final Application application = MopPluginService.getInstance().getActivity().getApplication();
         // SDK初始化结果回调，用于接收SDK初始化状态

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:mop/api.dart';
 export 'package:mop/api.dart' show FinFilePathType;
@@ -1020,7 +1019,6 @@ class Mop {
   }
 
   Mop._internal() {
-    debugPrint('mop: _internal');
     // init
     _channel = const MethodChannel('mop');
     _channel.setMethodCallHandler(_handlePlatformMethodCall);
@@ -1029,7 +1027,6 @@ class Mop {
     );
     _mopEventChannel.receiveBroadcastStream().listen(
       (dynamic value) {
-        debugPrint('matrix: receiveBroadcastStream $value');
         for (Map m in _mopEventQueye) {
           if (m['event'] == value['event']) {
             m['MopEventCallback'](value['body']);
@@ -1050,11 +1047,9 @@ class Mop {
   }
 
   Future<dynamic> _handlePlatformMethodCall(MethodCall call) async {
-    debugPrint("_handlePlatformMethodCall: method:${call.method}");
     if (call.method.startsWith("extensionApi:")) {
       final name = call.method.substring("extensionApi:".length);
       final handler = _extensionApis[name];
-      debugPrint("name:$name,handler:$handler");
       if (handler != null) {
         return await handler(call.arguments);
       }
@@ -1304,7 +1299,6 @@ class Mop {
         }
         list.add(map);
       });
-      debugPrint("registerAppletHandler getCustomMenus list $list");
       return list;
     };
     _appletHandlerApis["onCustomMenuClick"] = (params) async {
@@ -1393,7 +1387,6 @@ class Mop {
       'plainText': plainText,
     });
     var data = result?['data']['data'];
-    debugPrint(data);
     return data;
   }
 

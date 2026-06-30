@@ -81,7 +81,6 @@ public class MopPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
             }
         }
     };
-    Log.d(LOG_TAG, "mopplugin: invoke " + call.method);
     Event event = new Event(call.method, call.arguments, callback);
     delegate.setEvent(event);
     this.flutterInterface.invokeHandler(event);
@@ -101,7 +100,6 @@ public class MopPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
     binding.getPlatformViewRegistry()
         .registerViewFactory("com.finogeeks.mop/platform_view", platformViewFactory);
 
-    Log.d(LOG_TAG, "MopPlugin attached to engine");
   }
 
   @Override
@@ -115,7 +113,6 @@ public class MopPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
       eventChannel = null;
     }
     platformViewFactory = null;
-    Log.d(LOG_TAG, "MopPlugin detached from engine");
   }
 
   @Override
@@ -129,19 +126,16 @@ public class MopPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
     if (platformViewFactory != null) {
       platformViewFactory.setActivity(this.activity);
     }
-    Log.d(LOG_TAG, "MopPlugin attached to activity");
   }
 
   @Override
   public void onDetachedFromActivityForConfigChanges() {
     onDetachedFromActivity();
-    Log.d(LOG_TAG, "MopPlugin detached from activity for config changes");
   }
 
   @Override
   public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding) {
     onAttachedToActivity(binding);
-    Log.d(LOG_TAG, "MopPlugin reattached to activity for config changes");
   }
 
   @Override
@@ -153,7 +147,6 @@ public class MopPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
     if (platformViewFactory != null) {
       platformViewFactory.setActivity(null);
     }
-    Log.d(LOG_TAG, "MopPlugin detached from activity");
   }
 
   private void setServicesFromActivity(Activity activity) {
@@ -163,7 +156,6 @@ public class MopPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
     }
     try {
       MopPluginService.getInstance().initialize(activity, mopEventStream, methodChannel);
-      Log.d(LOG_TAG, "MopPluginService initialized successfully");
     } catch (Exception e) {
       Log.e(LOG_TAG, "Failed to initialize MopPluginService", e);
     }
